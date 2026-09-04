@@ -1,6 +1,6 @@
 ---
-trigger: model_decision
-description: Use when designing or reviewing a component's props/API, especially one with a variant prop or content-specific optional props.
+name: interaction-content-separation
+description: Reviews component APIs for mixed interaction/content responsibility — a modal, reveal, or carousel that knows too much about the specific content it displays. Use when designing or reviewing a component with a variant prop or content-specific optional props.
 ---
 
 Don't mix the component that owns an interaction with the component that owns its content. Follow these rules:

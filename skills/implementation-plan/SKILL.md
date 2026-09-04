@@ -1,6 +1,6 @@
 ---
-trigger: model_decision
-description: Use when writing an implementation plan for a new feature or screen, before starting to code.
+name: implementation-plan
+description: Structures an implementation plan for a new feature or screen before coding starts — scope survey, variant enumeration, shared data contract, and deprecation decisions. Use when asked to write a plan, design a new feature, or before starting any non-trivial coding task.
 ---
 
 Follow these rules when writing an implementation plan.
@@ -26,4 +26,4 @@ Follow these rules when writing an implementation plan.
 
 ## Decide what gets deprecated
 
-- State up front what gets deleted and what gets reused. A plan that only adds new code and leaves the old implementation in place doesn't get approved (see `deprecation-and-reuse.md` for following through at implementation time).
+- State up front what gets deleted and what gets reused. A plan that only adds new code and leaves the old implementation in place doesn't get approved (see the `deprecation-and-reuse` skill for following through at implementation time).

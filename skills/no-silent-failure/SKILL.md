@@ -1,6 +1,6 @@
 ---
-trigger: model_decision
-description: Use when writing or reviewing error handling, especially around side-effect calls like analytics, persistence, or submission.
+name: no-silent-failure
+description: Reviews error handling for silently swallowed failures, especially around side-effect calls like analytics, persistence, or submission. Use when writing or reviewing a try/catch, an API call, or anything that records success/failure state.
 ---
 
 Don't let error handling hide failures. Follow these rules:

@@ -1,6 +1,6 @@
 ---
-trigger: model_decision
-description: Use when doing a broad rewrite or replacement of an existing screen, component, or module.
+name: preserve-behavior-through-rewrites
+description: Prevents a broad rewrite from silently dropping safety-critical logic or existing user-facing interactions. Use when doing a broad rewrite or replacement of an existing screen, component, or module.
 ---
 
 A broad rewrite must not silently drop what already worked. Follow these rules:

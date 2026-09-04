@@ -1,6 +1,6 @@
 ---
-trigger: model_decision
-description: Use when writing or reviewing code that involves classification logic, boundary values, or business rules — check whether they already exist elsewhere before reimplementing them.
+name: single-source-of-truth
+description: Checks for and prevents duplicated classification logic or boundary values (score bands, tier rules, status categories) across files. Use when writing or reviewing code that computes a category, tier, or threshold-based decision.
 ---
 
 Don't reimplement the same classification logic in more than one file. Follow these rules:

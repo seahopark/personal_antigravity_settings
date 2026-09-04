@@ -1,0 +1,16 @@
+{
+  "verify-before-stop": {
+    "enabled": true,
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./scripts/verify-before-stop.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
