@@ -1,6 +1,6 @@
 ---
-trigger: always_on
-description: Formatting conventions for any markdown Antigravity writes.
+trigger: model_decision
+description: Use when the response will contain markdown-formatted text (explanations, plans, documentation).
 ---
 
 Follow these rules whenever writing markdown:

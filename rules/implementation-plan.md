@@ -1,6 +1,6 @@
 ---
-trigger: always_on
-description: What an implementation plan must contain before coding starts.
+trigger: model_decision
+description: Use when writing an implementation plan for a new feature or screen, before starting to code.
 ---
 
 Follow these rules when writing an implementation plan.
