@@ -58,6 +58,17 @@ barely matters:
 cp rules/*.md /path/to/project/.agents/rules/
 ```
 
+**Rules have no global equivalent.** Verified in the IDE on 2026-09-04:
+copying this file to `~/.gemini/config/rules/` does nothing — that
+directory is not scanned, and the rule never appears in the Skills &
+Customizations panel. Skills placed in `~/.gemini/config/skills/` *are*
+picked up and listed as `Global`, so the asymmetry is specific to rules.
+The only global rule the panel lists is `~/.gemini/GEMINI.md` (shown as
+`user_global`), which is always-on and does not support frontmatter, so the
+`trigger: model_decision` in this file is ignored there. To apply a rule
+machine-wide, paste its body into `~/.gemini/GEMINI.md` and accept that it
+loads unconditionally — or convert it into a skill instead.
+
 **Hooks** — copy both the config and the script together, preserving the
 relative path (`hooks.json` expects `./scripts/...`, resolved against the
 directory holding `hooks.json`):
