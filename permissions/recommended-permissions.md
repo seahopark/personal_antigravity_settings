@@ -18,24 +18,40 @@ Permission grants are real files, not just a UI-only setting:
   the real on-disk shape, not a typo. Project-level grants take precedence
   over global ones.
 
-The exact key name for a **deny** list hasn't been confirmed — the file
-only had `allow` populated when checked, with no `deny` key present at all.
+The deny list is a sibling `deny` array in the same object — confirmed by
+adding an entry through the UI and reading the file back.
 
 **These files are owned by the running app.** Editing them directly while
 Antigravity is open risks the app overwriting your edit with whatever it
-still has in memory. Use the UI (**Settings → Global Settings → Permission
-Grants**, or **Project-Level Settings → Permission Grants** for a specific
-project) instead of hand-editing the JSON, even though the JSON is real.
+still has in memory. Quit both the IDE and Antigravity 2.0 before touching
+the JSON.
+
+## Two UI limitations that matter
+
+The Permission Grants panel lives in **Antigravity 2.0** (Settings sidebar),
+not the IDE — the IDE reference documents no permissions UI at all. Both
+apps read the same `~/.gemini/config/`, so setting it in either place
+applies everywhere. Beyond that, the panel has two traps:
+
+1. **It wraps your input in `command(...)` automatically.** Typing
+   `command(rm -rf)` stores `command(command(rm -rf))`, which matches a
+   command literally starting with the text `command(rm -rf)` — i.e. never.
+   Type the bare value (`rm -rf`) instead. This fails silently: the entry
+   shows up in the list looking correct while blocking nothing.
+2. **It can only produce `command(...)` grants.** There is no type selector,
+   so `write_file(...)`, `read_file(...)`, `read_url(...)`, and `mcp(...)`
+   entries cannot be created through the UI at all. Typing
+   `write_file(.env)` stores `command(write_file(.env))`, which gates a
+   nonexistent command rather than file writes.
 
 ## How to apply this safely
 
-1. In Settings → Permission Grants, add one Deny entry (e.g.
-   `command(sudo)`) through the UI.
-2. Close Antigravity, then open `~/.gemini/config/config.json` and confirm
-   the actual key name it used for the deny list. Update this doc once
-   known.
-3. Add the rest of the list below through the same UI panel — for ~10
-   entries this is faster and safer than trying to script it.
+1. Add the `command(...)` entries through the UI, typing bare values with no
+   `command(` wrapper.
+2. For anything that is not a command — the `write_file` entries below —
+   quit Antigravity entirely and add them to the `deny` array in
+   `~/.gemini/config/config.json` by hand. There is no UI path.
+3. Reopen the app and confirm the panel lists them without re-wrapping.
 
 ## Deny — block regardless of context
 
@@ -52,6 +68,12 @@ write_file(.env)
 `.env` is included because Antigravity operating with write access to it
 could silently rewrite credentials; extend this list with any other
 secrets files specific to a project.
+
+`command(sudo)` is worth a second thought rather than a reflex. Denying it
+blocks it outright; leaving it off the list drops it to Ask, where you see
+and approve each invocation individually. If you want to stay in the loop on
+privileged commands rather than never running them, Ask is the better fit —
+Deny is for things you never want to happen at all.
 
 ## Allow — skip the prompt for routine, low-risk work
 
