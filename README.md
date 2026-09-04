@@ -59,21 +59,32 @@ cp rules/*.md /path/to/project/.agents/rules/
 ```
 
 **Hooks** — copy both the config and the script together, preserving the
-relative path (`hooks.json` expects `./scripts/...`):
+relative path (`hooks.json` expects `./scripts/...`, resolved against the
+directory holding `hooks.json`):
 
 ```bash
 mkdir -p /path/to/project/.agents
 cp hooks/hooks.json /path/to/project/.agents/
 cp -r hooks/scripts /path/to/project/.agents/
+# or globally, for every project on this machine:
+cp hooks/hooks.json ~/.gemini/config/
+cp -r hooks/scripts ~/.gemini/config/
 ```
 
-The included `verify-before-stop.sh` is a heuristic (greps the session
+The included `verify-before-stop.sh` is a heuristic: it greps the session
 transcript for evidence a build/lint/test command ran before letting the
-agent finish) — it was unit-tested against synthetic input, not against a
-real transcript.jsonl, since its exact schema isn't publicly documented.
-Read the comments at the top of the script before trusting it, and check a
-real transcript once you have one to confirm the grep patterns actually
-match.
+agent finish. As of 2026-09-04 its patterns are checked against real IDE
+transcripts (`~/.gemini/antigravity-ide/brain/*/.system_generated/logs/`),
+where tool calls appear as
+`{"name":"run_command","args":{"CommandLine":"\"npm run build\""}}`.
+
+Both greps are deliberately scoped rather than run over the raw file. An
+earlier version matched `VERIFY_CMD_PATTERN` against the whole transcript,
+which made merely *reading* a `package.json` or listing a directory
+containing `eslint.config.js` count as "a linter ran" — the hook then
+allowed every stop and silently did nothing. The verify check now only
+looks at extracted `CommandLine` values. Re-check the patterns if
+Antigravity changes the transcript format.
 
 **Permissions** — `permissions/recommended-permissions.md` is guidance to
 paste into the Customizations → Permissions panel in the IDE, not a file
