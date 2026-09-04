@@ -86,9 +86,12 @@ allowed every stop and silently did nothing. The verify check now only
 looks at extracted `CommandLine` values. Re-check the patterns if
 Antigravity changes the transcript format.
 
-**Permissions** — `permissions/recommended-permissions.md` is guidance to
-paste into the Customizations → Permissions panel in the IDE, not a file
-Antigravity reads automatically.
+**Permissions** — these are real files (`~/.gemini/config/config.json`
+globally, `~/.gemini/config/projects/<uuid>.json` per-project), but they're
+owned by the running app and can get overwritten if you hand-edit them
+while Antigravity is open. Apply changes through **Settings → Permission
+Grants** in the UI instead. See `permissions/recommended-permissions.md`
+for the confirmed file shape and the specific list to add.
 
 ## Contents
 
